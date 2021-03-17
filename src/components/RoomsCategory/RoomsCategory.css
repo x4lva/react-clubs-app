@@ -1,0 +1,15 @@
+.category-rooms-list-container{
+    display: flex;
+    flex-direction: row;
+    height: inherit;
+}
+.category-rooms-list-container .rooms-list-item:last-child{
+    margin-right: 0;
+}
+.category-item{
+    margin-bottom: 20px;
+}
+.category-header h2{
+    font-weight: 900;
+    color: #000000;
+}

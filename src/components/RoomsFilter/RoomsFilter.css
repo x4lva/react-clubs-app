@@ -1,0 +1,11 @@
+input[type="radio"] {
+    display: none;
+}
+.btn-dark{
+    transition: .4s;
+}
+.btn-dark.active{
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+}

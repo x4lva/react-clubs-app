@@ -1,0 +1,20 @@
+$marginValue: 15px;
+.fixed-button{
+    position: fixed;
+}
+.button-fixed-top-left{
+    top: $marginValue;
+    left: $marginValue;
+}
+.button-fixed-top-right{
+    top: $marginValue;
+    right: $marginValue;
+}
+.button-fixed-bottom-left{
+    bottom: $marginValue;
+    left: $marginValue;
+}
+.button-fixed-bottom-right{
+    bottom: $marginValue;
+    right: $marginValue;
+}

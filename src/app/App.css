@@ -1,0 +1,17 @@
+video{
+  object-fit: cover;
+}
+body{
+  background: #ECECF0 !important;
+  min-height: 100vh;
+}
+#root{
+  height: 100%;
+}
+::-webkit-scrollbar{
+  width: 8px;
+  background: #000000;
+}
+::-webkit-scrollbar-thumb{
+  background: #ffffff;
+}

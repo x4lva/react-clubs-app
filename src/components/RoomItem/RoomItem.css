@@ -1,0 +1,56 @@
+.rooms-list-item {
+  width: 300px;
+  min-width: 300px;
+  border-radius: 4px;
+  background: #000000;
+  color: #ffffff;
+  margin-right: 25px;
+  height: fit-content;
+  box-shadow: 0px 0px 5px #fff;
+  padding: 10px 15px;
+}
+
+.rooms-list-item-name {
+  max-width: 225px;
+}
+
+.rooms-list-item-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rooms-list-item-members {
+  padding: 4px 7px;
+  background: #ffffff;
+  border-radius: 4px;
+  color: #000000;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 5px;
+  height: fit-content;
+}
+
+.room-item-tags {
+  display: flex;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  gap: 10px 5px;
+  margin-bottom: 5px;
+}
+
+.room-item-tag {
+  padding: 1px 10px;
+  background: #fff;
+  border-radius: 26px;
+  margin-right: 10px;
+  color: #000;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.room-item-section-header {
+  padding: 5px 0;
+  margin-bottom: 5px;
+}
+
+/*# sourceMappingURL=RoomItem.css.map */
