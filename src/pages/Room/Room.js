@@ -3,7 +3,6 @@ import "./Room.css";
 import { useParams, withRouter } from "react-router";
 import Peer from "peerjs";
 import { v4 as uuidv4 } from "uuid";
-import { addAudio } from "../../utils/PeerConnection";
 import socket from "../../utils/SocketConnection";
 
 function Room(props) {
@@ -12,47 +11,71 @@ function Room(props) {
     const { roomId } = useParams();
 
     useEffect(() => {
-        const peer = new Peer(undefined, {
+        const videoGrid = document.getElementById("video-grid");
+
+        const myPeer = new Peer(undefined, {
             host: "/",
-            port: 3001,
+            port: "3001",
         });
-
-        const connectToNewUser = (userId, stream) => {
-            const call = peer.call(userId, stream);
-
-            call.on("stream", (userVideoStream) => {
-                addAudio(userVideoStream);
-            });
-
-            peers[userId] = call;
-        };
-
-        peer.on("open", (id) => {
-            socket.emit("join-room", roomId, id);
-        });
-
+        const myVideo = document.createElement("audio");
+        myVideo.muted = true;
+        myVideo.controls = true;
+        const peers = [];
         navigator.mediaDevices
-            .getUserMedia({ audio: true, video: true })
+            .getUserMedia({
+                audio: true,
+            })
             .then((stream) => {
-                addAudio(stream);
+                addVideoStream(myVideo, stream);
 
-                peer.on("call", (call) => {
+                myPeer.on("call", (call) => {
                     call.answer(stream);
+                    const video = document.createElement("audio");
+                    video.controls = true;
                     call.on("stream", (userVideoStream) => {
-                        addAudio(userVideoStream);
+                        addVideoStream(video, userVideoStream);
                     });
                 });
-
-                setInterval(() => {
-                    socket.on("user-connected", (userId) => {
-                        console.log("lol");
+                socket.on("user-connected", (userId) => {
+                    setTimeout(() => {
                         connectToNewUser(userId, stream);
-                    });
-                }, 1000);
+                    }, 1000);
+                });
+                socket.on("user-connected", (userId) => {
+                    connectToNewUser(userId, stream);
+                });
             });
+
         socket.on("user-disconnected", (userId) => {
             if (peers[userId]) peers[userId].close();
         });
+
+        myPeer.on("open", (id) => {
+            socket.emit("join-room", roomId, id);
+        });
+
+        function connectToNewUser(userId, stream) {
+            const call = myPeer.call(userId, stream);
+            const video = document.createElement("audio");
+            video.controls = true;
+            call.on("stream", (userVideoStream) => {
+                console.log(userVideoStream);
+                addVideoStream(video, userVideoStream);
+            });
+            call.on("close", () => {
+                video.remove();
+            });
+
+            peers[userId] = call;
+        }
+
+        function addVideoStream(video, stream) {
+            video.srcObject = stream;
+            video.addEventListener("loadedmetadata", () => {
+                video.play();
+            });
+            videoGrid.append(video);
+        }
     }, []);
 
     return (
