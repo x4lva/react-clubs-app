@@ -1,3 +1,5 @@
 class Room {
     constructor() {}
+
+    createRoom() {}
 }

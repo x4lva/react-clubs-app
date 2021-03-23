@@ -1,0 +1,25 @@
+.fixed-button {
+  position: fixed;
+}
+
+.button-fixed-top-left {
+  top: 15px;
+  left: 15px;
+}
+
+.button-fixed-top-right {
+  top: 15px;
+  right: 15px;
+}
+
+.button-fixed-bottom-left {
+  bottom: 15px;
+  left: 15px;
+}
+
+.button-fixed-bottom-right {
+  bottom: 15px;
+  right: 15px;
+}
+
+/*# sourceMappingURL=FixedButton.css.map */

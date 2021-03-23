@@ -1,0 +1,1 @@
+export const UPDATE_MAIN_STATE = "UPDATE_MAIN_STATE";
