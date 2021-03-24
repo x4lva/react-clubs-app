@@ -4,6 +4,7 @@ import { useParams, withRouter } from "react-router";
 import Peer from "peerjs";
 import { v4 as uuidv4 } from "uuid";
 import socket from "../../utils/SocketConnection";
+import firebase from "../../utils/FirebaseStore";
 
 function Room(props) {
     const peers = {};
@@ -11,6 +12,16 @@ function Room(props) {
     const { roomId } = useParams();
 
     useEffect(() => {
+        firebase
+            .database()
+            .ref("rooms")
+            .set({
+                [roomId]: {
+                    users: { ["dontLimited"]: "x4lva" },
+                },
+            })
+            .then((r) => {});
+
         const videoGrid = document.getElementById("video-grid");
 
         const myPeer = new Peer(undefined, {

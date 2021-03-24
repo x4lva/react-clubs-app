@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     toggleRoomCreateShow,
@@ -7,9 +7,11 @@ import {
 } from "../../redux/actions/MainActions";
 import TextareaAutosize from "react-textarea-autosize";
 import { v4 as uuidv4 } from "uuid";
+import firebase from "../../utils/FirebaseStore";
 
 import "./CreateRoomModal.css";
 import { withRouter } from "react-router";
+import { ToastsStore } from "react-toasts";
 
 function CreateRoomModal(props) {
     const dispatch = useDispatch();
@@ -24,10 +26,24 @@ function CreateRoomModal(props) {
         dispatch(onRoomCreateNameChange(e.target.value));
     }, []);
 
-    const createRoomHandler = () => {
+    const createRoomHandler = (path) => {
         const roomId = uuidv4();
-
-        props.history.push(`/room/${roomId}`);
+        if (roomCreateModalName === "") {
+            ToastsStore.error("Room name can not be empty");
+        } else {
+            firebase
+                .database()
+                .ref("rooms")
+                .push()
+                .set({
+                    id: roomId,
+                    name: roomCreateModalName,
+                    users: { ["x4lva"]: "x4lva" },
+                })
+                .then((r) => {});
+            toggleRoomCreate();
+            props.history.push(`/room/${roomId}`);
+        }
     };
 
     return (

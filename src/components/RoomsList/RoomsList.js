@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./RoomsList.scss";
 import RoomsCategory from "../RoomsCategory/RoomsCategory";
+import firebase from "../../utils/FirebaseStore";
 
 export default function RoomsList() {
     const [categories, setCategories] = useState([]);
@@ -78,6 +79,10 @@ export default function RoomsList() {
     ];
 
     useEffect(() => {
+        const rooms = firebase.database().ref("rooms");
+        rooms.on("value", (snapshot) => {
+            console.log(snapshot.val());
+        });
         setTimeout(() => {
             setCategories(userCategories);
             setLoading(false);
